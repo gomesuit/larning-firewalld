@@ -1,0 +1,16 @@
+- サービスの確認
+  - `firewall-cmd --get-services`
+- ICMPタイプの確認
+  - `firewall-cmd --get-icmptypes`
+- デフォルトゾーン定義ファイル
+  - /usr/lib/firewalld/zones
+- 独自ゾーン定義ファイル
+  - /etc/firewalld/zones
+- 定義更新
+  - `firewall-cmd --reload`
+- 各ゾーンの設定確認
+  - `firewall-cmd --list-all-zones`
+- デフォルトゾーンの確認
+  - `firewall-cmd --get-default-zone`
+- デフォルトゾーンの変更
+  - `firewall-cmd --set-default-zone=external`
