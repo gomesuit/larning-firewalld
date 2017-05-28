@@ -14,3 +14,41 @@
   - `firewall-cmd --get-default-zone`
 - デフォルトゾーンの変更
   - `firewall-cmd --set-default-zone=external`
+- NICインターフェースにゾーンを適用
+  - /etc/sysconfig/network-scripts/ 配下の設定ファイル
+  - ZONE=externalなどを追記
+  - `nmcli c reload`
+  - `nmcli c down eth1; nmcli c up eth1`
+- ゾーンの定義変更手順
+  - 許可されているサービスを表示
+    - `firewall-cmd --list-services --zone=public`
+  - 許可するサービスを追加
+    - `firewall-cmd --add-service=http --zone=public`
+  - 指定のサービスが許可されているか確認
+    - `firewall-cmd --query-service=http --zone=public`
+  - 許可するサービスを削除
+    - `firewall-cmd --remove-service=http --zone=public`
+  - 禁止されているICMPタイプを表示
+    - `firewall-cmd --list-icmp-blocks --zone=public`
+  - 禁止するICMPタイプを追加
+    - `firewall-cmd --add-icmp-block=echo-request --zone=public`
+  - 指定のICMPタイプが禁止されているか確認
+    - `firewall-cmd --query-icmp-block=echo-request --zone=public`
+  - 禁止するICMPタイプを削除
+    - `firewall-cmd --remove-icmp-block=echo-request --zone=public`
+- IPマスカレードとDNATの設定
+  - 現在の設定を確認
+    - `firewall-cmd --query-masquerade --zone=public`
+  - IPマスカレードを有効化
+    - `firewall-cmd --add-masquerade --zone=public`
+  - IPマスカレードを無効化
+    - `firewall-cmd --remove-masquerade --zone=public`
+- DNATの設定
+  - 現在の設定を確認
+    - `firewall-cmd --list-forward-ports --zone=public`
+  - 変換ルールを追加
+    - `firewall-cmd --add-forward-ports=<変換ルール> --zone=public`
+  - 変換ルールの存在を確認
+    - `firewall-cmd --query-forward-ports=<変換ルール> --zone=public`
+  - 変換ルールを削除
+    - `firewall-cmd --remove-forward-ports=<変換ルール> --zone=public`
